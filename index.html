@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Thi THPT 2026</title>
+    <style>
+        /* Đặt lại lề và sử dụng font chữ phổ biến */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #333;
+        }
+
+        /* Khung tiêu đề (Header) */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 80px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Logo hoặc Tiêu đề */
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        /* Danh sách các nút điều hướng */
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin-left: 40px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #475569;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-links li:hover {
+            color: #2563eb;
+        }
+
+        /* Vùng nội dung chính */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        /* Khung đăng nhập và Dashboard */
+        .login-box {
+            background-color: #ffffff;
+            width: 580px;
+            padding: 60px 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .lock-icon {
+            font-size: 56px;
+            color: #4f46e5;
+            margin-bottom: 24px;
+        }
+
+        .login-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+
+        .login-box p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        .login-input {
+            width: 85%;
+            padding: 16px 20px;
+            border: 1px solid #cbd5e1;
+            border-radius: 30px;
+            font-size: 16px;
+            color: #334155;
+            text-align: center;
+            background-color: #f8fafc;
+            transition: all 0.3s;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Nút đăng xuất */
+        .logout-btn {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Class ẩn/hiện thành phần */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Ôn Thi THPT 2026</div>
+        <nav class="nav-links">
+            <ul>
+                <li>Lý thuyết</li>
+                <li>Dạng toán</li>
+                <li>Luyện tập</li>
+                <li>Luyện đề</li>
+                <li>Quản lý GV</li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <div class="login-box" id="loginBox">
+            <div class="lock-icon">🔒</div>
+            <h2>Quản lý của Giáo Viên</h2>
+            <p>Vui lòng nhập mật khẩu để truy cập dữ liệu và bảng phân tích chuyên sâu.</p>
+            <input type="password" id="passwordInput" class="login-input" placeholder="Nhập mật khẩu (admin)">
+        </div>
+
+        <div class="login-box hidden" id="dashboardBox">
+            <div class="lock-icon">📊</div>
+            <h2 style="color: #10b981;">Đăng nhập thành công!</h2>
+            <p>Chào mừng bạn đến với bảng phân tích chuyên sâu và dữ liệu học tập.</p>
+            <button class="logout-btn" onclick="logout()">Đăng xuất</button>
+        </div>
+    </main>
+
+    <script>
+        const passwordInput = document.getElementById('passwordInput');
+        const loginBox = document.getElementById('loginBox');
+        const dashboardBox = document.getElementById('dashboardBox');
+
+        // Lắng nghe sự kiện bàn phím khi người dùng gõ
+        passwordInput.addEventListener('keypress', function(event) {
+            // Kiểm tra nếu phím được nhấn là phím "Enter"
+            if (event.key === 'Enter') {
+                if (passwordInput.value === 'admin') {
+                    // Ẩn khung nhập mật khẩu
+                    loginBox.classList.add('hidden');
+                    // Hiển thị khung quản lý
+                    dashboardBox.classList.remove('hidden');
+                } else {
+                    alert('Mật khẩu không đúng. Vui lòng thử lại!');
+                    passwordInput.value = ''; // Xóa nội dung nhập sai
+                }
+            }
+        });
+
+        // Chức năng đăng xuất
+        function logout() {
+            dashboardBox.classList.add('hidden');
+            loginBox.classList.remove('hidden');
+            passwordInput.value = '';
+        }
+    </script>
+
+</body>
+</html>
